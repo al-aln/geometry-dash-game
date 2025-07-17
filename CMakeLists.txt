@@ -27,6 +27,8 @@ EXECUTE_PROCESS(
 
 ADD_EXECUTABLE(${APP}
     src/main.cpp
+    src/platform_sdl.cpp
+    src/game.cpp
 )
 
 TARGET_INCLUDE_DIRECTORIES(${APP}
@@ -40,7 +42,6 @@ TARGET_LINK_LIBRARIES(${APP}
   PUBLIC
   PRIVATE
    SDL3
-   SDL3_image
 )
 
 ADD_CUSTOM_TARGET(run

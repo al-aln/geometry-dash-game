@@ -1,37 +1,22 @@
-#include <SDL3/SDL.h>
-#include <SDL3/SDL_render.h>
-#include <SDL3/SDL_video.h>
+#include "game.h"
+#include "platform_sdl.h"
+#include <SDL3/SDL_timer.h>
 
-struct GameRenderInfo_t {
-  SDL_Window *Window;
-  SDL_Renderer *Renderer;
-};
 
-static GameRenderInfo_t RenderInfo = {};
-
-int initWindow(GameRenderInfo_t *RenderInfo) {
-
-  SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
-
-  SDL_Window *window =
-      SDL_CreateWindow("Geometry dash game", 1024, 720, SDL_WINDOW_RESIZABLE);
-  SDL_Renderer *renderer = SDL_CreateRenderer(window, NULL);
-  SDL_SetRenderVSync(renderer, 1);
-
-  if (window && renderer) {
-    RenderInfo->Window = window;
-    RenderInfo->Renderer = renderer;
-    return 0;
-  }
-  return -1;
-}
+GameRenderInfo_t RenderInfo = {};
+GameState_t GameState = {};
 
 int main() {
   initWindow(&RenderInfo);
-
-  bool running = true;
-  while (running) {
+  GameState.is_running = true;
+  double last_frame = 0.0F;
+  while (GameState.is_running) {
+    double current_frame = (double)SDL_GetTicks() / 1000;
+    RenderInfo.frame_time = current_frame - last_frame;
+    last_frame = current_frame;
+    handleEvents(&GameState, &RenderInfo);
+    update_game();
+    render_game(&RenderInfo, &GameState);
   }
-
   return 0;
 }
