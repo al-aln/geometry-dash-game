@@ -1,3 +1,5 @@
+/assets/textures/myfun
+
 # ---> CMake
 CMakeLists.txt.user
 CMakeCache.txt
@@ -101,3 +103,4 @@ dkms.conf
 *.out
 *.app
 
+Legacy Adventure Pack - RUINS.zip

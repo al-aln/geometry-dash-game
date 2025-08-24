@@ -1,8 +1,6 @@
-#pragma once // this avoids including the file more than once
+#ifndef GAME_H
+#define GAME_H
 
-#include <SDL3/SDL_scancode.h>
-struct SDL_Window;
-struct SDL_Renderer;
 
 struct DisplaySettings_t {
   int width = 1280;
@@ -12,10 +10,10 @@ struct DisplaySettings_t {
 
 typedef struct GameInput_t {
     const bool *key;
-    bool keyState[SDL_SCANCODE_COUNT];
-    bool prevKeyState[SDL_SCANCODE_COUNT];
-    bool keyPressed[SDL_SCANCODE_COUNT];
-    bool keyReleased[SDL_SCANCODE_COUNT];
+    // bool keyState[SDL_SCANCODE_COUNT];
+    // bool prevKeyState[SDL_SCANCODE_COUNT];
+    // bool keyPressed[SDL_SCANCODE_COUNT];
+    // bool keyReleased[SDL_SCANCODE_COUNT];
 
     float mouse_x;
     float mouse_y;
@@ -28,8 +26,6 @@ typedef struct GameInput_t {
 } GameInput_t;
 
 struct GameRenderInfo_t {
-  SDL_Window *Window;
-  SDL_Renderer *Renderer;
   double frame_time;
   DisplaySettings_t DisplaySettings;
 };
@@ -54,3 +50,5 @@ void draw_player(GameRenderInfo_t *RenderInfo, GameState_t *GameState);
 void update_player(GameState_t *GameState, GameInput_t *GameInput);
 
 void init_game(GameState_t * GameState);
+
+#endif

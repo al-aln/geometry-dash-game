@@ -9,6 +9,7 @@ SET(APP geometry-dash-game)
 SET(CMAKE_CXX_STANDARD 17)
 SET(CMAKE_BUILD_DIR ${PROJECT_SOURCE_DIR}/build)
 SET(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+include(FetchContent)
 
 #############################################
 # Git submodules
@@ -16,6 +17,17 @@ SET(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 EXECUTE_PROCESS(
     COMMAND bash "-c" "git submodule update --init --recursive"
 )
+
+set(RAYLIB_VERSION 5.5)
+
+FetchContent_Declare(
+    raylib
+    DOWNLOAD_EXTRACT_TIMESTAMP OFF
+    URL https://github.com/raysan5/raylib/archive/refs/tags/${RAYLIB_VERSION}.tar.gz
+    FIND_PACKAGE_ARGS
+)
+
+FetchContent_MakeAvailable(raylib)
 
 #############################################
 # External Library
@@ -27,8 +39,8 @@ EXECUTE_PROCESS(
 
 ADD_EXECUTABLE(${APP}
     src/main.cpp
-    src/platform_sdl.cpp
     src/game.cpp
+    src/render.cpp
 )
 
 TARGET_INCLUDE_DIRECTORIES(${APP}
@@ -41,7 +53,7 @@ TARGET_INCLUDE_DIRECTORIES(${APP}
 TARGET_LINK_LIBRARIES(${APP}
   PUBLIC
   PRIVATE
-   SDL3
+   raylib
 )
 
 ADD_CUSTOM_TARGET(run
